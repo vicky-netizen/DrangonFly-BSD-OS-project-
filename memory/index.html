@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buddy Memory Allocation System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<article>
+  <div class="article-title">
+    <h1>Buddy Memory Allocation System</h1>
+    <div class="progress-wrapper">
+      <div class="progress-label"></div>
+      <progress></progress>
+    </div>
+  </div>
+  <img src="https://media.geeksforgeeks.org/wp-content/uploads/Capture-34.png"/>
+
+  <p><strong>Introduction:</strong> Buddy memory allocation is a technique utilized in computer memory management to efficiently allocate and deallocate memory by partitioning it into smaller blocks. It's widely employed in operating systems to optimize memory usage and reduce fragmentation.</p>
+  <h3>How it Works:</h3>
+  <ol>
+      <li><strong>Partitioning:</strong> The memory is initially considered as one large block and is recursively divided into smaller blocks until the smallest allocatable unit size, typically powers of 2, is reached.</li>
+      <li><strong>Power of 2 Sizes:</strong> Memory is divided into blocks of sizes that are powers of 2 (e.g., 1 byte, 2 bytes, 4 bytes, etc.).</li>
+      <li><strong>Allocation:</strong> When a memory allocation request occurs, the allocator finds the smallest suitable block that can accommodate the requested size. If the block is larger than necessary, it's split into two equal "buddy" blocks. This process continues recursively until the appropriate-sized block is reached.</li>
+      <li><strong>Deallocation:</strong> When memory is deallocated, the allocator checks if the buddy block (the adjacent block created during allocation) is also free. If it is, the two buddy blocks are merged back into a larger block. This process continues recursively until no more merging can be done.</li>
+      <li><strong>Fragmentation:</strong> Buddy memory allocation reduces external fragmentation by splitting and coalescing blocks in powers of 2 sizes. However, internal fragmentation can still occur, especially if the allocation requests are not powers of 2.</li>
+  </ol>
+  <h3>Types of Buddy Memory Allocation:</h3>
+  <ul>
+      <li><strong>Fixed Size Buddy System:</strong> In this type, the memory is divided into fixed-sized blocks, and each block can only be allocated if its size matches the requested size exactly. This approach minimizes fragmentation but can be less flexible.</li>
+      <li><strong>Dynamic Buddy System:</strong> In dynamic buddy systems, the size of memory blocks can vary dynamically based on allocation requests. This provides more flexibility but may result in increased fragmentation.</li>
+      <li><strong>Hierarchical Buddy System:</strong> This approach extends the buddy system into a hierarchical structure, allowing for efficient memory management in systems with large memory sizes. It divides memory into multiple levels of buddy systems, each managing a subset of the total memory.</li>
+  </ul>
+  <h3>Output</h3> 
+  <img src="C:\Users\Sujank\Desktop\dragonfly\final\visualise\binary_tree.png"/>
+</article>
+ 
+<!-- Instagram Frame -->
+<iframe src="python/index.html" style="border:none; width:100%; height: 4500px;"></iframe>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script  src="./script.js"></script>
+
+</body>
+</html>

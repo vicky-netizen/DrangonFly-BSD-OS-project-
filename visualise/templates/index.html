@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Allocator</title>
+</head>
+<body>
+    <h1>Memory Allocator</h1>
+    <form action="/initialize" method="post">
+        <label for="total_memory">Total Memory (in bytes):</label>
+        <input type="number" id="total_memory" name="total_memory" required>
+        <button type="submit">Initialize</button>
+    </form>
+    <form action="/allocate" method="post">
+        <label for="size">Allocate Memory (in bytes):</label>
+        <input type="number" id="size" name="size" required>
+        <button type="submit">Allocate</button>
+    </form>
+    <form action="/free" method="post">
+        <label for="index">Free Memory at Index:</label>
+        <input type="number" id="index" name="index" required>
+        <button type="submit">Free</button>
+    </form>
+    <h2>Memory Tree Visualization</h2>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Code Executor</title>
+</head>
+<body>
+<br>
+    <textarea id="inputs" rows="3" cols="50">Input data here...</textarea><br>
+    <button onclick="executeCode()">Execute</button><br>
+    <pre id="output"></pre>
+
+    <script>
+        function executeCode() {
+            const pythonCode = document.getElementById('pythonCode').value;
+            const inputs = document.getElementById('inputs').value;
+            const data = { code: pythonCode, inputs: inputs };
+            
+            fetch('/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.output;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

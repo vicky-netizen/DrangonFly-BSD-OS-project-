@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>python</title>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      parent.postMessage({
+        scrollTop: window.pageYOffset,
+        scrollHeight: document.body.scrollHeight,
+        innerHeight: window.innerHeight
+      }, '*');
+    });
+  </script>
+  <link rel='stylesheet' '><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html>
+  <head>
+    </head>
+    <body>
+
+<pre>
+  
+  <button id="copy-button" style="float:left;">Copy Code</button> 
+  <code class="language-python">
+
+class Process:
+  def __init__(self, name, AT, BT):
+      self.name = name
+      self.AT = AT
+      self.BT = BT
+      self.WT = 0
+      self.TAT = 0
+      self.RT = BT
+      self.CT = 0
+
+
+def sort_by_arrival(processes):
+  processes.sort(key=lambda x: x.AT)
+
+
+def process_queue1(Q1, tq1, time):
+  remaining_processes = []
+
+  print("Process in first queue following RR with qt=5")
+  print("Process\t\tTime")
+  process=Q1.pop(0)
+  if process.RT <= tq1:
+              time += process.RT
+              process.RT = 0
+              print(f"{process.name}\t\t{time}")
+  else:
+              process.WT = time
+              time += tq1
+              process.RT -= tq1
+              remaining_processes.append(process)
+              print(f"{process.name}\t\t{time}")
+              print(f"Remaining time for process {process.name} after queue 1: {process.RT}\n")
+
+  return Q1,remaining_processes, time
+
+
+def process_queue2(Q2, tq2, time):
+  remaining_processes = []
+  process=Q2.pop(0)
+  print("\nProcess in second queue following RR with qt=8")
+  print("Process\t\tTime")
+
+  if process.RT <= tq2:
+              time += process.RT
+              process.RT = 0
+              print(f"{process.name}\t\t{time}")
+  else:
+              process.AT = time
+              time += tq2
+              process.RT -= tq2
+              remaining_processes.append(process)
+              print(f"{process.name}\t\t{time}")
+              print(f"Remaining time for process {process.name} after queue 2: {process.RT}\n")
+
+  return Q2,remaining_processes, time
+
+
+def process_fcfs(Q3, time):
+  print("\nProcess in third queue following FCFS ")
+  print("Process\t\tTime")
+  process=Q3.pop(0)
+
+  time += process.RT
+  print(f"{process.name}\t\t{time}")
+  return time
+
+def main():
+  n = int(input("Enter number of processes: "))
+  processes = []
+
+  for i in range(n):
+      name = chr(ord('A') + i)
+      AT, BT = map(int, input(f"Enter the arrival time and burst time of process {name}: ").split())
+      processes.append(Process(name, AT, BT))
+
+  sort_by_arrival(processes)
+  tq1 = 5
+  tq2 = 8
+  time = processes[0].AT
+  
+  Q1=[]
+  Q2=[]
+  Q3=[]
+  temp=[]
+  while len(processes)!=0 or len(Q1)+len(Q2)+len(Q3)!=0:
+      i=0
+      while i < len(processes) and processes[i].AT<=time:
+          Q1.append(processes[i])
+          i+=1
+      processes=processes[i:]
+      
+      
+      if len(Q1)!=0:
+          Q1,temp,time=process_queue1(Q1, tq1, time)
+          if len(temp)!=0:
+              Q2.append(temp.pop(0))        
+          continue
+      elif len(Q2)!=0:
+          Q2,temp,time=process_queue2(Q2, tq2, time)
+          if len(temp)!=0:
+              Q3.append(temp.pop(0)) 
+          continue
+      elif len(Q3)!=0:
+          time=process_fcfs(Q3, time)
+          continue
+      else:
+          time+=1
+  
+if __name__ == "__main__":
+  main()
+
+</code></pre>
+
+<pre class='command-line' data-user='jonas' data-host='ubuntu'><code>
+
+</code></pre>
+
+
+<script>
+  window.addEventListener('load', function() {
+    var copyButton = document.getElementById('copy-button');
+    var codeElement = document.querySelector('pre code');
+
+    // Add click event listener to the copy button
+    copyButton.addEventListener('click', function() {
+      // Select the code text
+      var selection = window.getSelection();
+      var range = document.createRange();
+      range.selectNodeContents(codeElement);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Copy the selected text to clipboard
+      document.execCommand('copy');
+
+      // Clear the selection
+      selection.removeAllRanges();
+
+      // Change button text temporarily to indicate successful copy
+      copyButton.innerText = 'Copied!';
+      setTimeout(function() {
+        copyButton.innerText = 'Copy Code';
+      }, 2000); // Reset button text after 2 seconds
+    });
+  });
+</script>
+
+
+</body>
+</html>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-python.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

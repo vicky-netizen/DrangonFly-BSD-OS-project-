@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Synchronisation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<article>
+  <div class="article-title">
+    <h1>Synchronisation (Reader-Writer problem)</h1>
+    <div class="progress-wrapper">
+      <div class="progress-label"></div>
+      <progress></progress>
+    </div>
+  </div>
+  <img src="https://media.istockphoto.com/id/623447254/photo/radishes-on-conveyor-belt.jpg?s=612x612&w=0&k=20&c=gWVkpgUKOHncQtGnEghn8qZfpob2OxXz_XRLyosT8lY="/>
+
+  <h2 style="color:white">Vegetable Processing Plant</h2>
+  <p><strong>Introduction:</strong> In a food processing plant focused on vegetable processing, various stages like washing, peeling, chopping, and packaging happen in sequence. Some stages involve reading from a shared resource (like conveyor belts carrying vegetables), while other stages involve writing to the resource (like adding or removing items from the conveyor belt).</p>
+  
+  <h3>Processing Stages:</h3>
+  <ol>
+      <li><strong>Washing:</strong> Vegetables are loaded onto conveyor belts and passed through washing stations. In this stage, the conveyor belt is used as a shared resource for transporting vegetables to be washed.</li>
+      <li><strong>Peeling:</strong> After washing, vegetables move to the peeling stage where they are peeled automatically. This involves reading from the conveyor belt to peel the vegetables and writing back peeled vegetables onto the belt for the next stage.</li>
+      <li><strong>Chopping:</strong> Peeled vegetables are then transported to the chopping area. Here, the conveyor belt carries the peeled vegetables to the chopping machines. The machines read the vegetables from the belt, chop them, and then write the chopped pieces back onto the belt.</li>
+      <li><strong>Packaging:</strong> Finally, the chopped vegetables are moved to the packaging area. In this stage, the conveyor belt is used to transport chopped vegetables to the packaging machines, which read from the belt, package the vegetables, and then remove the packaged items from the belt, effectively writing to the output resource (packaged goods area).</li>
+  </ol>
+  <h3>Output</h3>
+  <img src="output.png"/>
+
+</article>
+
+
+<!-- Instagram Frame -->
+
+<iframe src="python/index.html" style="border:none; width:100%; height: 2100px;"></iframe>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script  src="./script.js"></script>
+
+</body>
+</html>

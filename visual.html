@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Scheduling Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .input-section, .output-section {
+            margin-bottom: 20px;
+        }
+        .input-section input, .input-section button {
+            display: block;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="input-section">
+    <h2>Enter Process Information</h2>
+    <label for="numProcesses">Number of Processes:</label>
+    <input type="number" id="numProcesses" min="1">
+    <div id="processInputs"></div>
+    <button onclick="generateProcessInputs()">Generate Inputs</button>
+    <button onclick="startScheduling()">Start Scheduling</button>
+</div>
+
+<div class="output-section">
+    <div id="log"></div>
+    <h2>Gantt Chart</h2>
+    <div id="ganttChart"></div>
+    <h2>Average Waiting Time and Turnaround Time</h2>
+    <div id="averages"></div>
+</div>
+
+<script>
+    class Process {
+        constructor(name, AT, BT) {
+            this.name = name;
+            this.AT = AT;
+            this.BT = BT;
+            this.WT = 0;
+            this.TAT = 0;
+            this.RT = BT;
+            this.CT = 0;
+        }
+    }
+
+    let processes = [];
+    let logDiv = document.getElementById("log");
+    let ganttChartDiv = document.getElementById("ganttChart");
+    let averagesDiv = document.getElementById("averages");
+
+    function generateProcessInputs() {
+        const numProcesses = document.getElementById("numProcesses").value;
+        const processInputsDiv = document.getElementById("processInputs");
+        processInputsDiv.innerHTML = '';
+        for (let i = 0; i < numProcesses; i++) {
+            processInputsDiv.innerHTML += `
+                <h3>Process ${String.fromCharCode(65 + i)}</h3>
+                <label for="AT${i}">Arrival Time:</label>
+                <input type="number" id="AT${i}" min="0">
+                <label for="BT${i}">Burst Time:</label>
+                <input type="number" id="BT${i}" min="1">
+            `;
+        }
+    }
+
+    function startScheduling() {
+        const numProcesses = document.getElementById("numProcesses").value;
+        processes = [];
+        for (let i = 0; i < numProcesses; i++) {
+            const AT = document.getElementById(`AT${i}`).value;
+            const BT = document.getElementById(`BT${i}`).value;
+            processes.push(new Process(String.fromCharCode(65 + i), parseInt(AT), parseInt(BT)));
+        }
+
+        processes.sort((a, b) => a.AT - b.AT);
+        simulateScheduling();
+    }
+
+    function simulateScheduling() {
+        const tq1 = 5;
+        const tq2 = 8;
+        let time = processes[0].AT;
+        let Q1 = [], Q2 = [], Q3 = [];
+        let temp = [];
+        let ganttChart = [];
+        logDiv.innerHTML = '';
+
+ 
+
+        while (processes.length !== 0 || Q1.length + Q2.length + Q3.length !== 0) {
+            let i = 0;
+            while (i < processes.length && processes[i].AT <= time) {
+                Q1.push(processes[i]);
+                i++;
+            }
+            processes = processes.slice(i);
+
+            if (Q1.length !== 0) {
+                [Q1, temp, time] = processQueue1(Q1, tq1, time, ganttChart);
+                if (temp.length !== 0) {
+                    Q2.push(temp.pop(0));
+                }
+                continue;
+            } else if (Q2.length !== 0) {
+                [Q2, temp, time] = processQueue2(Q2, tq2, time, ganttChart);
+                if (temp.length !== 0) {
+                    Q3.push(temp.pop(0));
+                }
+                continue;
+            } else if (Q3.length !== 0) {
+                time = processFCFS(Q3, time, ganttChart);
+                continue;
+            } else {
+                time += 1;
+            }
+        }
+
+        displayGanttChart(ganttChart);
+
+
+        function processQueue1(Q1, tq1, time, ganttChart) {
+            let remainingProcesses = [];
+
+            let process = Q1.shift();
+            if (process.RT <= tq1) {
+                time += process.RT;
+                process.RT = 0;
+                process.CT = time;
+                ganttChart.push({ name: process.name, start: time - process.RT, end: time });
+ 
+            } else {
+                ganttChart.push({ name: process.name, start: time, end: time + tq1 });
+                process.WT += time - process.AT;
+                time += tq1;
+                process.RT -= tq1;
+                process.AT = time;
+                remainingProcesses.push(process);
+            }
+
+            return [Q1, remainingProcesses, time];
+        }
+
+        function processQueue2(Q2, tq2, time, ganttChart) {
+            let remainingProcesses = [];
+            let process = Q2.shift();
+
+ 
+
+            if (process.RT <= tq2) {
+                time += process.RT;
+                process.RT = 0;
+                process.CT = time;
+                ganttChart.push({ name: process.name, start: time - process.RT, end: time });
+ 
+            } else {
+                ganttChart.push({ name: process.name, start: time, end: time + tq2 });
+                process.WT += time - process.AT;
+                time += tq2;
+                process.RT -= tq2;
+                process.AT = time;
+                remainingProcesses.push(process);
+             
+            }
+
+            return [Q2, remainingProcesses, time];
+        }
+
+        function processFCFS(Q3, time, ganttChart) {
+ 
+            let process = Q3.shift();
+
+            ganttChart.push({ name: process.name, start: time, end: time + process.RT });
+            process.WT = time - process.AT;
+            time += process.RT;
+            process.CT = time;
+
+            return time;
+        }
+    }
+
+    function displayGanttChart(ganttChart) {
+    let ganttTable = '<table><tbody><tr><th>Process</th><th>Start Time</th><th>End Time</th></tr>';
+    let totalTurnaroundTime = 0;
+    let totalWaitingTime = 0;
+
+    ganttChart.forEach((entry, index) => {
+        ganttTable += `<tr><td>${entry.name}</td><td>${entry.start}</td><td>${entry.end}</td></tr>`;
+
+        // Calculate turnaround time for each process
+        let turnaroundTime = entry.end - entry.start;
+        totalTurnaroundTime += turnaroundTime;
+
+        // Calculate waiting time for each process except for the first one
+        if (index > 0) {
+            let waitingTime = entry.start - ganttChart[index - 1].end;
+            totalWaitingTime += waitingTime;
+        }
+    });
+
+    ganttTable += '</tbody></table>';
+    ganttChartDiv.innerHTML = ganttTable;
+
+    // Calculate average turnaround time
+    const averageTurnaroundTime = totalTurnaroundTime / ganttChart.length;
+
+    // Calculate average waiting time
+    const averageWaitingTime = totalWaitingTime / (ganttChart.length - 1);
+
+    console.log("Average Turnaround Time:", averageTurnaroundTime);
+    console.log("Average Waiting Time:", averageWaitingTime);
+}
+
+
+
+ 
+</script>
+
+</body>
+</html>

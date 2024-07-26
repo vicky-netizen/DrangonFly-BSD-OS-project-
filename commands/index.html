@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Commands and system calls</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<article>
+  <div class="article-title">
+    <h1>Commands and system calls</h1>
+    <div class="progress-wrapper">
+      <div class="progress-label"></div>
+      <progress></progress>
+    </div>
+  </div><img src="https://cdn.wallpapersafari.com/55/34/PiIyAw.png"/>
+  <h3>Commands of DragonFly OS</h3>
+  <ol>
+      <li>
+          <strong>cd (Change Directory)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> cd [directory_path]</li>
+              <li><strong>Description:</strong> Changes the current working directory to the specified directory.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>ls (List)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> ls [options] [directory_path]</li>
+              <li><strong>Description:</strong> Lists the files and directories in the current or specified directory.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>mkdir (Make Directory)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> mkdir [directory_name]</li>
+              <li><strong>Description:</strong> Creates a new directory with the specified name.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>rmdir (Remove Directory)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> rmdir [directory_name]</li>
+              <li><strong>Description:</strong> Deletes the specified directory if it's empty.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>rm (Remove)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> rm [options] [file_path]</li>
+              <li><strong>Description:</strong> Deletes the specified file(s).</li>
+          </ul>
+      </li>
+      <li>
+          <strong>chmod (Change Mode)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> chmod [options] [mode] [file_path]</li>
+              <li><strong>Description:</strong> Changes the permissions of a file or directory.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>chown (Change Owner)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> chown [options] [user:group] [file_path]</li>
+              <li><strong>Description:</strong> Changes the owner and group of a file or directory.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>ps (Process Status)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> ps [options]</li>
+              <li><strong>Description:</strong> Displays information about active processes.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>kill (Terminate Process)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> kill [options] [process_id]</li>
+              <li><strong>Description:</strong> Terminates the specified process.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>cp (Copy)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> cp [options] [source_path] [destination_path]</li>
+              <li><strong>Description:</strong> Copies files or directories from the source path to the destination path.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>mv (Move)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> mv [options] [source_path] [destination_path]</li>
+              <li><strong>Description:</strong> Moves or renames files or directories from the source path to the destination path.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>find (Find)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> find [path] [options] [expression]</li>
+              <li><strong>Description:</strong> Searches for files and directories within a specified path based on the given expression.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>grep (Global Regular Expression Print)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> grep [options] [pattern] [file]</li>
+              <li><strong>Description:</strong> Searches for a pattern in the specified file(s) and prints matching lines.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>vmstat (Virtual Memory Statistics)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> vmstat [options]</li>
+              <li><strong>Description:</strong> Reports information about processes, memory, paging, block I/O, traps, and CPU activity.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>ifconfig -a (Interface Configuration)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> ifconfig -a</li>
+              <li><strong>Description:</strong> Displays information about all network interfaces on the system.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>kldstat (Kernel Module Status)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> kldstat [options]</li>
+              <li><strong>Description:</strong> Displays the status of loaded kernel modules.</li>
+          </ul>
+      </li>
+      <li>
+          <strong>netstat -rn (Network Statistics Routing Table)</strong>
+          <ul>
+              <li><strong>Syntax:</strong> netstat -rn</li>
+              <li><strong>Description:</strong> Displays the kernel routing tables in numerical (numeric) form.</li>
+          </ul>
+      </li>
+  </ol>
+  
+</div>
+
+<div>
+  <h3>System Calls</h3>
+  <img src="https://phoenixnap.com/kb/wp-content/uploads/2023/08/system-call-file-management.png"/>
+  <p>DragonFly BSD, like other Unix-like operating systems, utilizes system calls to interact with the kernel and perform various operations. Here are some essential system calls in DragonFly BSD along with brief explanations:</p>
+  <ul>
+      <li><strong>open():</strong> This system call is used to open or create a file. It takes parameters such as the file path, access mode (read, write, execute), and permissions.</li>
+      <li><strong>close():</strong> Used to close an opened file descriptor, freeing up system resources associated with it.</li>
+      <li><strong>read():</strong> Reads data from an open file descriptor into a buffer in memory.</li>
+      <li><strong>write():</strong> Writes data from a buffer in memory to an open file descriptor.</li>
+      <li><strong>fork():</strong> Creates a new process by duplicating the existing process. The new process is known as the child process, and it inherits the memory space and resources of the parent process.</li>
+      <li><strong>exec():</strong> Used to replace the current process with a new program. It loads the program into the current process's address space and begins its execution.</li>
+      <li><strong>exit():</strong> Terminates the calling process and returns an exit status to the parent process.</li>
+      <li><strong>wait():</strong> Suspends the execution of the calling process until one of its child processes terminates. It also retrieves the exit status of the terminated child process.</li>
+      <li><strong>kill():</strong> Sends a signal to a process or a group of processes, allowing for inter-process communication and control.</li>
+      <li><strong>pipe():</strong> Creates an interprocess communication channel, represented by two file descriptors, commonly used for communication between parent and child processes.</li>
+      <li><strong>stat():</strong> Retrieves information about a file, such as its size, permissions, and timestamps.</li>
+      <li><strong>chdir():</strong> Changes the current working directory of the process to the specified directory.</li>
+      <li><strong>mkdir():</strong> Creates a new directory with the specified name and permissions.</li>
+      <li><strong>rmdir():</strong> Removes an empty directory specified by the pathname.</li>
+  </ul>
+  <p>These are just a few examples of system calls available in DragonFly BSD. Each system call serves a specific purpose in facilitating communication and interaction between user-space programs and the kernel.</p>
+
+ </article>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

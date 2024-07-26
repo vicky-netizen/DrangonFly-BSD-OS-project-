@@ -1,0 +1,88 @@
+:root {
+  --progress-bar-height: 4px;
+  --progress-bar-color: gainsboro;
+  --progress-bar-value-color: dodgerblue;
+  --progress-bar-value: 20%;
+}
+
+
+html{
+  background-color: black;
+}
+
+
+body {
+  background-color: black;
+}
+article {
+  position: relative;
+  padding: 24px;
+  width: 100%;
+  max-width: 700px;
+  margin: 60px auto;
+}
+
+.article-title {
+  position: sticky;
+  top: 0;
+  padding-bottom: 24px;
+}
+
+h1 {
+  margin-bottom: 0;
+  padding: 18px 40px 18px 0;
+  font-size: 1.8rem;
+  color:white;
+  background-color: black;
+}
+h3{
+  color:white;
+}
+ul{
+  color:white;
+}
+
+
+img {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+p {
+  color: white;
+}
+
+.progress-wrapper {
+  position: relative;
+}
+
+.progress-label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 14px;
+  color: white;
+}
+
+progress {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: absolute;
+  width: 100%;
+  height: var(--progress-bar-height);
+  background-color: var(--progress-bar-color);
+  border: none;
+}
+progress::-moz-progress-bar {
+  background-color: var(--progress-bar-value-color);
+}
+progress::-webkit-progress-bar {
+  background-color: var(--progress-bar-color);
+}
+progress::-webkit-progress-value {
+  background-color: var(--progress-bar-value-color);
+}
+progress::-ms-fill {
+  background-color: var(--progress-bar-value-color);
+}
